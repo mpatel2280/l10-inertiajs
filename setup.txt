@@ -1,0 +1,44 @@
+https://github.com/inertiajs/pingcrm
+
+cd l10-inertiajs
+
+composer install
+
+npm ci
+
+npm run dev
+
+php artisan key:generate
+
+php artisan migrate
+
+-- error
+SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes (SQL: alter table `personal_access_tokens` add index `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type`, `tokenable_id`))
+
+-- Fixes
+app\Providers\AppServiceProvider.php
+
+use Illuminate\Support\Facades\Schema;
+Schema::defaultStringLength(191); 
+
+php artisan db:wipe
+php artisan migrate
+php artisan db:seed
+
+php artisan serve --port=8082
+
+http://localhost:8082/
+
+Username: johndoe@example.com
+Password: secret
+
+-- create a new git repo
+git init
+git add .
+git commit -m "laravel10 inertiajs initial commit"
+git branch -M master
+git remote add origin https://github.com/mpatel2280/l10-inertiajs.git
+git push -u origin master
+
+
+
